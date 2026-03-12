@@ -1,0 +1,46 @@
+Analyzing airport_app...                                        
+
+warning - Unused import: 'package:google_fonts/google_fonts.dart' - lib\main.dart:3:8 - unused_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\main.dart:106:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\main.dart:140:71 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\explore_screen.dart:105:56 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\explore_screen.dart:250:54 - deprecated_member_use
+  error - Invalid constant value - lib\screens\explore_screen.dart:434:58 - invalid_constant
+  error - The getter 'primaryGradient' isn't defined for the type 'AppColors' - lib\screens\explore_screen.dart:434:68 - undefined_getter
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\flights_screen.dart:80:54 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\flights_screen.dart:141:55 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\flights_screen.dart:149:42 - deprecated_member_use
+  error - Invalid constant value - lib\screens\flights_screen.dart:564:64 - invalid_constant
+  error - The getter 'primaryGradient' isn't defined for the type 'AppColors' - lib\screens\flights_screen.dart:564:74 - undefined_getter
+   info - The import of 'package:flutter/services.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\screens\home_screen.dart:2:8 - unnecessary_import
+warning - Unused import: '../widgets/shared_widgets.dart' - lib\screens\home_screen.dart:7:8 - unused_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\map_screen.dart:84:56 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\map_screen.dart:168:57 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\map_screen.dart:271:49 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\map_screen.dart:287:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\map_screen.dart:296:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\map_screen.dart:359:43 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\map_screen.dart:394:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\map_screen.dart:494:57 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\map_screen.dart:502:57 - deprecated_member_use
+  error - Invalid constant value - lib\screens\profile_screen.dart:54:23 - invalid_constant
+  error - The getter 'primaryGradient' isn't defined for the type 'AppColors' - lib\screens\profile_screen.dart:54:33 - undefined_getter
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\profile_screen.dart:60:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\profile_screen.dart:101:44 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\profile_screen.dart:144:53 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\profile_screen.dart:152:40 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\profile_screen.dart:205:27 - deprecated_member_use
+  error - The getter 'accent' isn't defined for the type 'AppColors' - lib\screens\services_screen.dart:113:44 - undefined_getter
+  error - The getter 'accent' isn't defined for the type 'AppColors' - lib\screens\services_screen.dart:119:46 - undefined_getter
+  error - Invalid constant value - lib\screens\services_screen.dart:165:60 - invalid_constant
+  error - The getter 'primaryGradient' isn't defined for the type 'AppColors' - lib\screens\services_screen.dart:165:70 - undefined_getter
+  error - The getter 'accentYellow' isn't defined for the type 'AppColors' - lib\screens\services_screen.dart:248:54 - undefined_getter
+  error - Invalid constant value - lib\theme\app_theme.dart:44:20 - invalid_constant
+  error - The getter 'accent' isn't defined for the type 'AppColors' - lib\theme\app_theme.dart:44:30 - undefined_getter
+   info - 'background' is deprecated and shouldn't be used. Use surface instead. This feature was deprecated after v3.18.0-0.1.pre - lib\theme\app_theme.dart:46:9 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\shared_widgets.dart:64:23 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\shared_widgets.dart:66:42 - deprecated_member_use
+  error - Invalid constant value - lib\widgets\shared_widgets.dart:180:47 - invalid_constant
+  error - The getter 'accentYellow' isn't defined for the type 'AppColors' - lib\widgets\shared_widgets.dart:180:57 - undefined_getter
+
+42 issues found. (ran in 2.1s)
