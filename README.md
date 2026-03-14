@@ -28,6 +28,44 @@ A high-fidelity, modular Flutter application for airport navigation and flight m
 
 ---
 
+---
+
+## 📸 Screenshots
+
+<p align="center">
+  <img src="demo/ss1.jpeg" width="180"/>
+  <img src="demo/ss2.jpeg" width="180"/>
+  <img src="demo/ss3.jpeg" width="180"/>
+  <img src="demo/ss4.jpeg" width="180"/>
+</p>
+<p align="center">
+  <img src="demo/ss5.jpeg" width="180"/>
+  <img src="demo/ss6.jpeg" width="180"/>
+  <img src="demo/ss7.jpeg" width="180"/>
+  <img src="demo/ss8.jpeg" width="180"/>
+</p>
+<p align="center">
+  <img src="demo/ss9.jpeg" width="180"/>
+  <img src="demo/ss10.jpeg" width="180"/>
+</p>
+
+---
+
+## 🎬 Demo
+
+## 🎬 Demo
+
+<p align="center">
+  <a href="https://github.com/shameer1w2/singa-airport/blob/main/previews/screen_record.mp4">
+    <img src="demo/ss1.jpeg" width="400"/>
+    <br/>
+    ▶️ Click to Watch Full Demo
+  </a>
+</p>
+
+---
+
+---
 ## 🛠 Tech Stack
 
 - **Flutter 3.x** & **Dart 3.x**
