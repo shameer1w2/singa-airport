@@ -55,11 +55,13 @@ A high-fidelity, modular Flutter application for airport navigation and flight m
 
 ## 🎬 Demo
 
+## 🎬 Demo
+
 <p align="center">
-  <a href="https://github.com/shameer1w2/singa-airport/blob/main/previews/demo.mp4">
+  <a href="https://github.com/shameer1w2/singa-airport/raw/main/previews/demo.mp4">
     <img src="previews/ss1.jpeg" width="400"/>
     <br/>
-    ▶️ Click to Watch Full Demo
+    ▶️ Click to Download & Watch Demo
   </a>
 </p>
 
