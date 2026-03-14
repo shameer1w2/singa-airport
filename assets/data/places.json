@@ -1,6 +1,21 @@
 {
   "places": [
     {
+      "id": "c3",
+      "name": "Gate 1C",
+      "category": "Gates",
+      "terminal": "Terminal 3",
+      "level": "L1",
+      "rating": 4.5,
+      "reviewCount": 0,
+      "priceRange": "",
+      "walkTime": "2 min",
+      "imageEmoji": "🛫",
+      "isOpen": true,
+      "description": "Primary departure gate for local flights",
+      "tags": ["Gate", "Airside"]
+    },
+    {
       "id": "1",
       "name": "Crystal Jade Kitchen",
       "category": "Restaurant",
@@ -50,7 +65,7 @@
       "name": "IMAX Cinema",
       "category": "Entertainment",
       "terminal": "Jewel",
-      "level": "L5",
+      "level": "L2",
       "rating": 4.8,
       "reviewCount": 543,
       "priceRange": "$$",
@@ -89,6 +104,81 @@
       "isOpen": true,
       "description": "Full-service pharmacy with health and wellness products",
       "tags": ["Pharmacy", "Health", "Wellness"]
+    },
+    {
+      "id": "7",
+      "name": "Jewel Retail",
+      "category": "Shopping",
+      "terminal": "Jewel",
+      "level": "L2",
+      "rating": 4.9,
+      "reviewCount": 3450,
+      "priceRange": "$$$",
+      "walkTime": "12 min",
+      "imageEmoji": "💎",
+      "isOpen": true,
+      "description": "World-class retail experience in the heart of Jewel",
+      "tags": ["Shopping", "Fashion", "Jewel"]
+    },
+    {
+      "id": "8",
+      "name": "DBS ATM",
+      "category": "ATM",
+      "terminal": "Terminal 3",
+      "level": "L1",
+      "rating": 4.0,
+      "reviewCount": 120,
+      "priceRange": "$",
+      "walkTime": "1 min",
+      "imageEmoji": "🏧",
+      "isOpen": true,
+      "description": "24/7 ATM services for your banking needs",
+      "tags": ["ATM", "Banking", "Cash"]
+    },
+    {
+      "id": "9",
+      "name": "OCBC ATM",
+      "category": "ATM",
+      "terminal": "Terminal 3",
+      "level": "B2",
+      "rating": 4.1,
+      "reviewCount": 85,
+      "priceRange": "$",
+      "walkTime": "5 min",
+      "imageEmoji": "🏧",
+      "isOpen": true,
+      "description": "Quick cash withdrawals and banking services",
+      "tags": ["ATM", "Banking", "Cash"]
+    },
+    {
+      "id": "10",
+      "name": "Gate 2A",
+      "category": "Gates",
+      "terminal": "Terminal 3",
+      "level": "L2",
+      "rating": 4.5,
+      "reviewCount": 0,
+      "priceRange": "",
+      "walkTime": "8 min",
+      "imageEmoji": "🛫",
+      "isOpen": true,
+      "description": "Departure gate for international flights",
+      "tags": ["Gate", "Airside"]
+    },
+    {
+      "id": "11",
+      "name": "Gate 2B",
+      "category": "Gates",
+      "terminal": "Terminal 3",
+      "level": "L2",
+      "rating": 4.5,
+      "reviewCount": 0,
+      "priceRange": "",
+      "walkTime": "10 min",
+      "imageEmoji": "🛫",
+      "isOpen": true,
+      "description": "Departure gate for regional flights",
+      "tags": ["Gate", "Airside"]
     }
   ]
 }

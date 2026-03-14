@@ -17,7 +17,6 @@ class AppColors {
   
   static const List<Color> primaryGradient = [Color(0xFFF4CE4F), Color(0xFFE0BB40)];
   static const Color accent = Color(0xFF6C63FF);
-  static const Color accentYellow = Color(0xFFF4CE4F);
 
   // Text
   static const Color textPrimary = Color(0xFFFFFFFF);
@@ -29,7 +28,7 @@ class AppColors {
 
   // Status
   static const Color success = Color(0xFF82EA7A);
-  static const Color warning = Color(0xFFF4CE4F);
+  static const Color warning = Color(0xFFFF9F43);
   static const Color error = Color(0xFFEA5455);
   static const Color info = Color(0xFF48CAE4);
 

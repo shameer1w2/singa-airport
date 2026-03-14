@@ -8,6 +8,15 @@ import '../widgets/shared_widgets.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
+  static const _userName = 'Jamie Davies';
+  static const _userInitials = 'JD';
+  static const _userEmail = 'jamie.davies@email.com';
+
+  static const _savedFlights = [
+    ('SQ 321', 'London Heathrow', '22:45', 'Dec 15', 'boarding'),
+    ('CX 715', 'Hong Kong', '14:20', 'Dec 18', 'ontime'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +66,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withOpacity(0.3),
+                color: AppColors.primary.withValues(alpha: 0.3),
                 blurRadius: 16,
                 spreadRadius: 2,
               ),
@@ -65,7 +74,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'JD',
+              _userInitials,
               style: GoogleFonts.inter(
                 color: Colors.white,
                 fontSize: 22,
@@ -80,7 +89,7 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Jamie Davies',
+                _userName,
                 style: GoogleFonts.inter(
                   color: AppColors.textPrimary,
                   fontSize: 20,
@@ -88,44 +97,19 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'jamie.davies@email.com',
+                _userEmail,
                 style: GoogleFonts.inter(
                   color: AppColors.textSecondary,
                   fontSize: 13,
                 ),
               ),
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Text(
-                  'KrisFlyer Elite Gold',
-                  style: GoogleFonts.inter(
-                    color: AppColors.primary,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+
             ],
           ),
         ),
-        GestureDetector(
+        IconSquareButton(
+          icon: Icons.edit_outlined,
           onTap: () => HapticFeedback.lightImpact(),
-          child: Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: AppColors.surfaceCard,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: AppColors.border, width: 0.5),
-            ),
-            child: const Icon(Icons.edit_outlined,
-                color: AppColors.textSecondary, size: 16),
-          ),
         ),
       ],
     ).animate().fadeIn(duration: 400.ms).slideY(begin: 0.05, end: 0);
@@ -141,7 +125,7 @@ class ProfileScreen extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withOpacity(0.2), width: 0.5),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.2), width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +133,7 @@ class ProfileScreen extends StatelessWidget {
           Text(
             'TRIP STATS',
             style: GoogleFonts.inter(
-              color: AppColors.primary.withOpacity(0.8),
+              color: AppColors.primary.withValues(alpha: 0.8),
               fontSize: 10,
               fontWeight: FontWeight.w600,
               letterSpacing: 1.5,
@@ -202,7 +186,7 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       width: 0.5,
       height: 40,
-      color: Colors.white.withOpacity(0.1),
+      color: Colors.white.withValues(alpha: 0.1),
     );
   }
 
@@ -212,10 +196,9 @@ class ProfileScreen extends StatelessWidget {
       children: [
         const SectionHeader(title: 'My Flights', actionLabel: 'Add flight'),
         const SizedBox(height: 14),
-        ...List.generate(2, (index) {
-          final f = index == 0
-              ? ('SQ 321', 'London Heathrow', '22:45', 'Dec 15', 'boarding')
-              : ('CX 715', 'Hong Kong', '14:20', 'Dec 18', 'ontime');
+        ...List.from(_savedFlights).asMap().entries.map((entry) {
+          final index = entry.key;
+          final f = entry.value;
           return Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: DarkCard(
@@ -289,7 +272,7 @@ class ProfileScreen extends StatelessWidget {
       ('Language', Icons.language_outlined, false),
       ('Accessibility', Icons.accessibility_new_outlined, false),
       ('Help & Support', Icons.help_outline_rounded, false),
-      ('About Sinport', Icons.info_outline_rounded, false),
+      ('About Singa Airport', Icons.info_outline_rounded, false),
     ];
 
     return Column(

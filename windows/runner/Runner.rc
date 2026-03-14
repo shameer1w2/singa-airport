@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.sinport" "\0"
-            VALUE "FileDescription", "sinport_app" "\0"
+            VALUE "CompanyName", "com.singaairport" "\0"
+            VALUE "FileDescription", "Singa Airport" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "sinport_app" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 com.sinport. All rights reserved." "\0"
-            VALUE "OriginalFilename", "sinport_app.exe" "\0"
-            VALUE "ProductName", "sinport_app" "\0"
+            VALUE "InternalName", "Singa Airport" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 com.singaairport. All rights reserved." "\0"
+            VALUE "OriginalFilename", "singa_airport.exe" "\0"
+            VALUE "ProductName", "Singa Airport" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

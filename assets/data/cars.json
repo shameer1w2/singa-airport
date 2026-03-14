@@ -1,0 +1,59 @@
+{
+  "categories": ["All", "Luxury", "SUV", "Electric", "Business"],
+  "cars": [
+    {
+      "name": "Tesla Model S",
+      "category": "Electric",
+      "price": "S$ 150",
+      "rating": 4.9,
+      "emoji": "🚗⚡",
+      "colorHex": "FF6C63FF",
+      "features": ["Autopilot", "Premium Audio", "Long Range"]
+    },
+    {
+      "name": "Mercedes-Benz S-Class",
+      "category": "Luxury",
+      "price": "S$ 280",
+      "rating": 4.8,
+      "emoji": "🏎️👑",
+      "colorHex": "FF9D4EDD",
+      "features": ["Chauffeur", "Massage Seats", "Panoramic"]
+    },
+    {
+      "name": "Range Rover Vogue",
+      "category": "SUV",
+      "price": "S$ 320",
+      "rating": 4.7,
+      "emoji": "🚙🏔️",
+      "colorHex": "FF246BFE",
+      "features": ["All-terrain", "Sunroof", "Large Boot"]
+    },
+    {
+      "name": "BMW 7 Series",
+      "category": "Business",
+      "price": "S$ 240",
+      "rating": 4.6,
+      "emoji": "🚗💼",
+      "colorHex": "FF2ECC71",
+      "features": ["Executive Rear", "Soft Close", "HUD"]
+    },
+    {
+      "name": "Audi e-tron GT",
+      "category": "Electric",
+      "price": "S$ 190",
+      "rating": 4.9,
+      "emoji": "🏎️⚡",
+      "colorHex": "FFFF3B30",
+      "features": ["Quattro", "Fast Charging", "Matrix LED"]
+    },
+    {
+      "name": "Lexus LS 500h",
+      "category": "Business",
+      "price": "S$ 210",
+      "rating": 4.7,
+      "emoji": "🚗🧘",
+      "colorHex": "FF007AFF",
+      "features": ["Hybrid", "Quiet Cabin", "Mark Levinson"]
+    }
+  ]
+}

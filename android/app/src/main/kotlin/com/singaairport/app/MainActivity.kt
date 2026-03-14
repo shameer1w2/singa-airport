@@ -1,4 +1,4 @@
-package com.sinport.sinport_app
+package com.singaairport.app
 
 import io.flutter.embedding.android.FlutterActivity
 

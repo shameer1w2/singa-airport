@@ -6,8 +6,78 @@ import '../theme/app_theme.dart';
 import '../models/models.dart';
 import '../widgets/shared_widgets.dart';
 
-class ServicesScreen extends StatelessWidget {
-  const ServicesScreen({super.key});
+class ServicesScreen extends StatefulWidget {
+  final String? initialSection;
+  const ServicesScreen({super.key, this.initialSection});
+
+  @override
+  State<ServicesScreen> createState() => _ServicesScreenState();
+}
+
+class _ServicesScreenState extends State<ServicesScreen> {
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _transfersKey = GlobalKey();
+  final GlobalKey _hotelsKey = GlobalKey();
+  final GlobalKey _baggageKey = GlobalKey();
+  final GlobalKey _forumKey = GlobalKey();
+
+  late final Map<String, GlobalKey> _sectionKeys;
+
+  static const _hotels = [
+    _HotelData('Crowne Plaza Changi', '★ 4.8', 'S\$ 280/night', '5 min', '🏨'),
+    _HotelData('Aerotel Singapore', '★ 4.5', 'S\$ 120/night', 'In-terminal', '🛏️'),
+    _HotelData('Hilton Singapore', '★ 4.6', 'S\$ 240/night', '15 min', '🏩'),
+  ];
+
+  static const _services = [
+    _ServiceTile('Baggage Storage', '📦', 'S\$ 12/day'),
+    _ServiceTile('Luggage Wrap', '🎁', 'S\$ 18'),
+    _ServiceTile('Sim Cards', '📱', 'From S\$ 8'),
+    _ServiceTile('Money Exchange', '💱', 'Best rates'),
+    _ServiceTile('Prayer Room', '🕌', 'Free'),
+    _ServiceTile('Shower Facilities', '🚿', 'S\$ 18'),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _sectionKeys = {
+      'transfers': _transfersKey,
+      'hotels': _hotelsKey,
+      'baggage': _baggageKey,
+      'forum': _forumKey,
+    };
+    if (widget.initialSection != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToSection(widget.initialSection!);
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(ServicesScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialSection != null && widget.initialSection != oldWidget.initialSection) {
+      _scrollToSection(widget.initialSection!);
+    }
+  }
+
+  void _scrollToSection(String section) {
+    final key = _sectionKeys[section];
+    if (key?.currentContext != null) {
+      Scrollable.ensureVisible(
+        key!.currentContext!,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +85,7 @@ class ServicesScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: CustomScrollView(
+          controller: _scrollController,
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
@@ -33,18 +104,20 @@ class ServicesScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Everything you need at Changi',
+                      'Everything you need at Singa Airport',
                       style: GoogleFonts.inter(
                         color: AppColors.textSecondary,
                         fontSize: 13,
                       ),
                     ),
                     const SizedBox(height: 20),
-                    _buildTransferSection(context),
+                    _buildSectionWrapper(_transfersKey, _buildTransferSection(context)),
                     const SizedBox(height: 28),
-                    _buildHotelsSection(),
+                    _buildSectionWrapper(_hotelsKey, _buildHotelsSection()),
                     const SizedBox(height: 28),
-                    _buildAirportServices(),
+                    _buildSectionWrapper(_baggageKey, _buildAirportServices()),
+                    const SizedBox(height: 28),
+                    _buildSectionWrapper(_forumKey, _buildForumSection()),
                     const SizedBox(height: 100),
                   ],
                 ),
@@ -53,6 +126,13 @@ class ServicesScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSectionWrapper(Key key, Widget child) {
+    return Container(
+      key: key,
+      child: child,
     );
   }
 
@@ -110,7 +190,7 @@ class ServicesScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
-                          color: AppColors.accent.withOpacity(0.15),
+                          color: AppColors.accent.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
@@ -183,12 +263,6 @@ class ServicesScreen extends StatelessWidget {
   }
 
   Widget _buildHotelsSection() {
-    final hotels = [
-      _HotelData('Crowne Plaza Changi', '★ 4.8', 'S\$ 280/night', '5 min', '🏨'),
-      _HotelData('Aerotel Singapore', '★ 4.5', 'S\$ 120/night', 'In-terminal', '🛏️'),
-      _HotelData('Hilton Singapore', '★ 4.6', 'S\$ 240/night', '15 min', '🏩'),
-    ];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -199,11 +273,11 @@ class ServicesScreen extends StatelessWidget {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            itemCount: hotels.length,
+            itemCount: _hotels.length,
             itemBuilder: (context, index) {
-              final h = hotels[index];
+              final h = _hotels[index];
               return Padding(
-                padding: EdgeInsets.only(right: index < hotels.length - 1 ? 12 : 0),
+                padding: EdgeInsets.only(right: index < _hotels.length - 1 ? 12 : 0),
                 child: Container(
                   width: 160,
                   decoration: BoxDecoration(
@@ -216,9 +290,9 @@ class ServicesScreen extends StatelessWidget {
                     children: [
                       Container(
                         height: 80,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: AppColors.surfaceElevated,
-                          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                         ),
                         child: Center(
                           child: Text(h.emoji, style: const TextStyle(fontSize: 36)),
@@ -245,7 +319,7 @@ class ServicesScreen extends StatelessWidget {
                                 Text(
                                   h.rating,
                                   style: GoogleFonts.inter(
-                                    color: AppColors.accentYellow,
+                                    color: AppColors.primary,
                                     fontSize: 10,
                                   ),
                                 ),
@@ -283,15 +357,6 @@ class ServicesScreen extends StatelessWidget {
   }
 
   Widget _buildAirportServices() {
-    final services = [
-      _ServiceTile('Baggage Storage', '📦', 'S\$ 12/day'),
-      _ServiceTile('Luggage Wrap', '🎁', 'S\$ 18'),
-      _ServiceTile('Sim Cards', '📱', 'From S\$ 8'),
-      _ServiceTile('Money Exchange', '💱', 'Best rates'),
-      _ServiceTile('Prayer Room', '🕌', 'Free'),
-      _ServiceTile('Shower Facilities', '🚿', 'S\$ 18'),
-    ];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -306,9 +371,9 @@ class ServicesScreen extends StatelessWidget {
             crossAxisSpacing: 10,
             childAspectRatio: 1.0,
           ),
-          itemCount: services.length,
+          itemCount: _services.length,
           itemBuilder: (context, index) {
-            final s = services[index];
+            final s = _services[index];
             return GestureDetector(
               onTap: () => HapticFeedback.lightImpact(),
               child: DarkCard(
@@ -341,6 +406,89 @@ class ServicesScreen extends StatelessWidget {
               ).animate(delay: (index * 50).ms).fadeIn(duration: 300.ms).scale(begin: const Offset(0.9, 0.9)),
             );
           },
+        ),
+      ],
+    );
+  }
+  Widget _buildForumSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SectionHeader(title: 'Airport Forum', actionLabel: 'Join Discussion'),
+        const SizedBox(height: 14),
+        DarkCard(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF6C63FF),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Center(child: Text('✈️', style: TextStyle(fontSize: 14))),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Community Thread',
+                          style: GoogleFonts.inter(
+                            color: AppColors.textPrimary,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          '"Best lounge for a 4h layover?"',
+                          style: GoogleFonts.inter(
+                            color: AppColors.textSecondary,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Icon(Icons.chevron_right_rounded, color: AppColors.textTertiary),
+                ],
+              ),
+              const SizedBox(height: 16),
+              const Divider(color: AppColors.border, height: 1),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.people_outline_rounded, color: AppColors.primary, size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        '1,240 active travelers',
+                        style: GoogleFonts.inter(
+                          color: AppColors.textSecondary,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '24 new posts',
+                    style: GoogleFonts.inter(
+                      color: AppColors.primary,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );

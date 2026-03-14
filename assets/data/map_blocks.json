@@ -1,60 +1,33 @@
 {
   "blocks": [
-    {
-      "id": "1",
-      "x": 100.0,
-      "y": 100.0,
-      "width": 100.0,
-      "height": 60.0,
-      "colorHex": "FF424242",
-      "isElevated": false,
-      "label": "Shop"
-    },
-    {
-      "id": "2",
-      "x": 300.0,
-      "y": 150.0,
-      "width": 120.0,
-      "height": 120.0,
-      "colorHex": "FF303030",
-      "isElevated": false,
-      "label": "Shop"
-    },
-    {
-      "id": "3",
-      "x": 150.0,
-      "y": 300.0,
-      "width": 80.0,
-      "height": 150.0,
-      "colorHex": "FF212121",
-      "isElevated": false,
-      "label": "Shop"
-    },
-    {
-      "id": "4",
-      "x": 400.0,
-      "y": 400.0,
-      "width": 150.0,
-      "height": 100.0,
-      "colorHex": "FF424242",
-      "isElevated": false,
-      "label": "Shop"
-    },
-    {
-      "id": "target",
-      "x": 250.0,
-      "y": 300.0,
-      "width": 80.0,
-      "height": 80.0,
-      "colorHex": "FFF4CE4F",
-      "isElevated": true,
-      "label": ""
-    }
+    {"id": "1", "x": -250.0, "y": -200.0, "width": 80.0, "height": 80.0, "colorHex": "FF26272F", "elevation": 30.0, "label": "Crystal Jade"},
+    {"id": "2", "x": -150.0, "y": -200.0, "width": 80.0, "height": 80.0, "colorHex": "FF2E2F37", "elevation": 40.0, "label": "Starbucks"},
+    {"id": "c3", "x": -50.0, "y": -200.0, "width": 80.0, "height": 80.0, "colorHex": "FF26272F", "elevation": 45.0, "label": "Gate 1C"},
+    {"id": "3", "x": 50.0, "y": -200.0, "width": 80.0, "height": 80.0, "colorHex": "FF2E2F37", "elevation": 35.0, "label": "DFS"},
+    {"id": "5", "x": 150.0, "y": -200.0, "width": 80.0, "height": 80.0, "colorHex": "FF26272F", "elevation": 50.0, "label": "Lounge"},
+
+    {"id": "m1", "x": -250.0, "y": -50.0, "width": 250.0, "height": 100.0, "colorHex": "FF282931", "elevation": 40.0, "label": "Terminal West"},
+    {"id": "m2", "x": 50.0, "y": -50.0, "width": 250.0, "height": 100.0, "colorHex": "FF2E2F37", "elevation": 45.0, "label": "Terminal East"},
+
+    {"id": "7", "x": -250.0, "y": 100.0, "width": 60.0, "height": 60.0, "colorHex": "FF2A2B33", "elevation": 35.0, "label": "Jewel Retail"},
+    {"id": "6", "x": -330.0, "y": 100.0, "width": 60.0, "height": 60.0, "colorHex": "FF2E2F37", "elevation": 35.0, "label": "Guardian"},
+    {"id": "b1_2", "x": -170.0, "y": 100.0, "width": 60.0, "height": 60.0, "colorHex": "FF2A2B33", "elevation": 35.0, "label": ""},
+    {"id": "8", "x": -90.0, "y": 100.0, "width": 60.0, "height": 60.0, "colorHex": "FF2A2B33", "elevation": 35.0, "label": "DBS ATM"},
+    {"id": "b2_1", "x": -250.0, "y": 180.0, "width": 60.0, "height": 60.0, "colorHex": "FF2E2F37", "elevation": 35.0, "label": ""},
+    {"id": "b2_2", "x": -170.0, "y": 180.0, "width": 60.0, "height": 60.0, "colorHex": "FF2E2F37", "elevation": 35.0, "label": ""},
+    {"id": "9", "x": -90.0, "y": 180.0, "width": 60.0, "height": 60.0, "colorHex": "FF2E2F37", "elevation": 35.0, "label": "OCBC ATM"},
+
+    {"id": "4", "x": -10.0, "y": 100.0, "width": 180.0, "height": 140.0, "colorHex": "FF25262E", "elevation": 55.0, "label": "IMAX"},
+
+    {"id": "10", "x": 200.0, "y": 100.0, "width": 60.0, "height": 60.0, "colorHex": "FF2E2F37", "elevation": 30.0, "label": "Gate 2A"},
+    {"id": "b4_2", "x": 280.0, "y": 100.0, "width": 60.0, "height": 60.0, "colorHex": "FF2A2B33", "elevation": 30.0, "label": ""},
+    {"id": "11", "x": 200.0, "y": 180.0, "width": 60.0, "height": 60.0, "colorHex": "FF2E2F37", "elevation": 30.0, "label": "Gate 2B"},
+    {"id": "b4_4", "x": 280.0, "y": 180.0, "width": 60.0, "height": 60.0, "colorHex": "FF2A2B33", "elevation": 30.0, "label": ""},
+
+    {"id": "bottom_bar", "x": -250.0, "y": 280.0, "width": 590.0, "height": 160.0, "colorHex": "FF2E2F37", "elevation": 20.0, "label": "Baggage Claim"}
   ],
   "route": [
-    {"x": 200.0, "y": 450.0},
-    {"x": 350.0, "y": 450.0},
-    {"x": 350.0, "y": 200.0},
-    {"x": 420.0, "y": 200.0}
+    {"x": 25.0, "y": 0.0},
+    {"x": 25.0, "y": 75.0}
   ]
 }

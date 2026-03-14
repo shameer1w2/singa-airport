@@ -20,7 +20,16 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
   final _searchController = TextEditingController();
   bool _isSearchActive = false;
   List<Place> _places = [];
+  List<Place> _filteredPlaces = [];
   bool _isLoading = true;
+
+  static const _catMap = {
+    1: 'Restaurant',
+    2: 'Duty Free',
+    3: 'Lounge',
+    4: 'Health',
+    5: 'Entertainment',
+  };
 
   @override
   void initState() {
@@ -47,17 +56,26 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
     }
   }
 
-  List<Place> get _filteredPlaces {
-    if (_selectedCategory == 0) return _places;
-    final catMap = {
-      1: 'Restaurant',
-      2: 'Duty Free',
-      3: 'Lounge',
-      4: 'Health',
-      5: 'Entertainment',
-    };
-    final cat = catMap[_selectedCategory];
-    return _places.where((p) => p.category == cat).toList();
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _applyFilter() {
+    var filtered = _places;
+    if (_selectedCategory != 0) {
+      final cat = _catMap[_selectedCategory]!;
+      filtered = filtered.where((p) => p.category == cat).toList();
+    }
+    final query = _searchController.text.toLowerCase();
+    if (query.isNotEmpty) {
+      filtered = filtered.where((p) =>
+        p.name.toLowerCase().contains(query) ||
+        p.tags.any((tag) => tag.toLowerCase().contains(query))
+      ).toList();
+    }
+    setState(() => _filteredPlaces = filtered);
   }
 
   @override
@@ -134,7 +152,7 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
           color: AppColors.surfaceCard,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: _isSearchActive ? AppColors.primary.withOpacity(0.5) : AppColors.border,
+            color: _isSearchActive ? AppColors.primary.withValues(alpha: 0.5) : AppColors.border,
             width: 0.5,
           ),
         ),
@@ -151,6 +169,7 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
               child: TextField(
                 controller: _searchController,
                 onTap: () => setState(() => _isSearchActive = true),
+                onChanged: (_) => _applyFilter(),
                 onSubmitted: (_) => setState(() => _isSearchActive = false),
                 style: GoogleFonts.inter(
                   color: AppColors.textPrimary,
@@ -191,7 +210,8 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
                       isSelected: _selectedCategory == e.key,
                       onTap: () {
                         HapticFeedback.selectionClick();
-                        setState(() => _selectedCategory = e.key);
+                        _selectedCategory = e.key;
+                        _applyFilter();
                       },
                     ),
                   ))
@@ -208,7 +228,7 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('🔍', style: const TextStyle(fontSize: 40)),
+            const Text('🔍', style: TextStyle(fontSize: 40)),
             const SizedBox(height: 12),
             Text(
               'No places found',
@@ -279,7 +299,7 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
-                            color: AppColors.success.withOpacity(0.1),
+                            color: AppColors.success.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
@@ -374,18 +394,7 @@ class _PlaceDetailSheet extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Handle
-          Center(
-            child: Container(
-              margin: const EdgeInsets.only(top: 12),
-              width: 36,
-              height: 4,
-              decoration: BoxDecoration(
-                color: AppColors.border,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
+          const SheetHandle(),
           const SizedBox(height: 20),
           // Emoji
           Container(
@@ -458,33 +467,9 @@ class _PlaceDetailSheet extends StatelessWidget {
           // Navigate button
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 0, 24, 30),
-            child: SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: AppColors.primaryGradient),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.navigation_rounded, color: Colors.white, size: 18),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Navigate Here',
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            child: GradientButton(
+              label: 'Navigate Here',
+              onTap: () => Navigator.pop(context),
             ),
           ),
         ],

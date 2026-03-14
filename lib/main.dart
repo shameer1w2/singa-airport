@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'theme/app_theme.dart';
 import 'screens/home_screen.dart';
 import 'screens/explore_screen.dart';
@@ -8,9 +8,13 @@ import 'screens/map_screen.dart';
 import 'screens/flights_screen.dart';
 import 'screens/services_screen.dart';
 import 'screens/profile_screen.dart';
+import 'screens/ticket_screen.dart';
+import 'screens/rent_car_screen.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.light,
@@ -30,13 +34,17 @@ class AirportApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Airport App',
+      title: 'Singa Airport',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      home: const MainNavigation(),
+      home: const MainNavigation(), // ← goes straight to app, native splash handles it
     );
   }
 }
+
+// ════════════════════════════════════════════════════════════════════
+// Main Navigation
+// ════════════════════════════════════════════════════════════════════
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -48,24 +56,56 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation>
     with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
+  bool _isMapNavigating = false;
   late AnimationController _fabController;
+  String? _targetServiceSection;
 
-  final _screens = const [
-    HomeScreen(),
-    ExploreScreen(),
-    MapScreen(),
-    FlightsScreen(),
-    ServicesScreen(),
-    ProfileScreen(),
-  ];
+  // Cache stateless screens to avoid re-instantiation on every setState
+  late final ExploreScreen _exploreScreen;
+  late final FlightsScreen _flightsScreen;
+  late final ProfileScreen _profileScreen;
+  late final TicketScreen _ticketScreen;
 
   @override
   void initState() {
     super.initState();
+    FlutterNativeSplash.remove(); // ← removes splash when app is ready
     _fabController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 200),
     );
+    _exploreScreen = const ExploreScreen();
+    _flightsScreen = const FlightsScreen();
+    _profileScreen = const ProfileScreen();
+    _ticketScreen = const TicketScreen();
+  }
+
+  List<Widget> _buildScreens() {
+    return [
+      HomeScreen(
+        onProfileTap: () => setState(() => _currentIndex = 5),
+        onServiceTap: (section) {
+          setState(() {
+            _targetServiceSection = section;
+            _currentIndex = 4;
+          });
+        },
+        onFlightsTap: () => setState(() => _currentIndex = 3),
+        onTicketsTap: () => setState(() => _currentIndex = 6),
+        onCarRentTap: () => setState(() => _currentIndex = 7),
+      ),
+      MapScreen(
+        onNavigatingChanged: (isNavigating) {
+          setState(() => _isMapNavigating = isNavigating);
+        },
+      ),
+      _exploreScreen,
+      _flightsScreen,
+      ServicesScreen(initialSection: _targetServiceSection),
+      _profileScreen,
+      _ticketScreen,
+      RentCarScreen(onBack: () => setState(() => _currentIndex = 0)),
+    ];
   }
 
   @override
@@ -87,9 +127,18 @@ class _MainNavigationState extends State<MainNavigation>
       extendBody: true,
       body: IndexedStack(
         index: _currentIndex,
-        children: _screens,
+        children: _buildScreens(),
       ),
-      bottomNavigationBar: _buildBottomNav(),
+      bottomNavigationBar: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        height: _isMapNavigating ? 0 : 120,
+        child: ClipRect(
+          child: Wrap(
+            children: [_buildBottomNav()],
+          ),
+        ),
+      ),
     );
   }
 
@@ -99,11 +148,11 @@ class _MainNavigationState extends State<MainNavigation>
       child: Container(
         height: 64,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.whiteCard,
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -112,10 +161,10 @@ class _MainNavigationState extends State<MainNavigation>
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildNavItem(0, Icons.home_rounded, Icons.home_outlined),
-            _buildNavItem(1, Icons.map_rounded, Icons.map_outlined),
+            _buildNavItem(0, Icons.home_rounded,           Icons.home_outlined),
+            _buildNavItem(1, Icons.map_rounded,            Icons.map_outlined),
             _buildNavItem(2, Icons.calendar_month_rounded, Icons.calendar_today_outlined),
-            _buildNavItem(3, Icons.grid_view_rounded, Icons.grid_view_outlined),
+            _buildNavItem(3, Icons.grid_view_rounded,      Icons.grid_view_outlined),
           ],
         ),
       ),
@@ -137,7 +186,9 @@ class _MainNavigationState extends State<MainNavigation>
         ),
         child: Icon(
           isSelected ? activeIcon : inactiveIcon,
-          color: isSelected ? AppColors.textDark : AppColors.textDark.withOpacity(0.6),
+          color: isSelected
+              ? AppColors.textDark
+              : AppColors.textDark.withValues(alpha: 0.6),
           size: 26,
         ),
       ),

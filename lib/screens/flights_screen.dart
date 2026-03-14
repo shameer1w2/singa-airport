@@ -22,6 +22,14 @@ class _FlightsScreenState extends State<FlightsScreen>
   List<Flight> _arrivals = [];
   List<Flight> _myFlights = [];
   bool _isLoading = true;
+  bool _isSearching = false;
+  final TextEditingController _searchController = TextEditingController();
+
+  static const Map<String, String> _filterToStatus = {
+    'On Time': 'ontime',
+    'Boarding': 'boarding',
+    'Delayed': 'delayed',
+  };
 
   @override
   void initState() {
@@ -58,6 +66,7 @@ class _FlightsScreenState extends State<FlightsScreen>
   @override
   void dispose() {
     _tabController.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -90,49 +99,71 @@ class _FlightsScreenState extends State<FlightsScreen>
       child: Row(
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Flight Board',
-                  style: GoogleFonts.inter(
-                    color: AppColors.textPrimary,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.5,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Container(
-                      width: 7,
-                      height: 7,
-                      decoration: BoxDecoration(
-                        color: AppColors.success,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.success.withOpacity(0.5),
-                            blurRadius: 4,
+            child: _isSearching
+                ? TextField(
+                    controller: _searchController,
+                    autofocus: true,
+                    style: GoogleFonts.inter(color: AppColors.textPrimary, fontSize: 18),
+                    decoration: InputDecoration(
+                      hintText: 'Search flights...',
+                      hintStyle: GoogleFonts.inter(color: AppColors.textSecondary),
+                      border: InputBorder.none,
+                    ),
+                    onChanged: (val) => setState(() {}),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Flight Board',
+                        style: GoogleFonts.inter(
+                          color: AppColors.textPrimary,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 7,
+                            height: 7,
+                            decoration: BoxDecoration(
+                              color: AppColors.success,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.success.withValues(alpha: 0.5),
+                                  blurRadius: 4,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Live · Updated just now',
+                            style: GoogleFonts.inter(
+                              color: AppColors.textSecondary,
+                              fontSize: 12,
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Live · Updated just now',
-                      style: GoogleFonts.inter(
-                        color: AppColors.textSecondary,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                    ],
+                  ),
           ),
           GestureDetector(
-            onTap: () => HapticFeedback.lightImpact(),
+            onTap: () {
+              HapticFeedback.lightImpact();
+              setState(() {
+                if (_isSearching) {
+                  _isSearching = false;
+                  _searchController.clear();
+                } else {
+                  _isSearching = true;
+                }
+              });
+            },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
@@ -142,11 +173,11 @@ class _FlightsScreenState extends State<FlightsScreen>
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.search_rounded,
+                  Icon(_isSearching ? Icons.close_rounded : Icons.search_rounded,
                       color: AppColors.textSecondary, size: 16),
                   const SizedBox(width: 6),
                   Text(
-                    'Search',
+                    _isSearching ? 'Cancel' : 'Search',
                     style: GoogleFonts.inter(
                       color: AppColors.textSecondary,
                       fontSize: 12,
@@ -176,7 +207,7 @@ class _FlightsScreenState extends State<FlightsScreen>
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 0.5),
+          border: Border.all(color: AppColors.primary.withValues(alpha: 0.3), width: 0.5),
         ),
         child: Row(
           children: [
@@ -184,7 +215,7 @@ class _FlightsScreenState extends State<FlightsScreen>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.15),
+                color: AppColors.primary.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Icon(Icons.confirmation_number_outlined,
@@ -284,16 +315,27 @@ class _FlightsScreenState extends State<FlightsScreen>
   }
 
   Widget _buildFlightListView(List<Flight> flights) {
-    final filtered = _selectedFilter == 'All'
-        ? flights
-        : flights.where((f) {
-            switch (_selectedFilter) {
-              case 'On Time': return f.status == 'ontime';
-              case 'Boarding': return f.status == 'boarding';
-              case 'Delayed': return f.status == 'delayed';
-              default: return true;
-            }
-          }).toList();
+    List<Flight> currentFlights = List.from(flights);
+    if (_selectedFilter == 'Boarding') {
+      for (var f in _myFlights) {
+        if (f.status == 'boarding' && !currentFlights.any((c) => c.flightNumber == f.flightNumber)) {
+          currentFlights.insert(0, f);
+        }
+      }
+    }
+
+    var filtered = _selectedFilter == 'All'
+        ? currentFlights
+        : currentFlights.where((f) => f.status == _filterToStatus[_selectedFilter]).toList();
+
+    if (_searchController.text.isNotEmpty) {
+      final query = _searchController.text.toLowerCase();
+      filtered = filtered.where((f) => 
+        f.flightNumber.toLowerCase().contains(query) ||
+        f.airline.toLowerCase().contains(query) ||
+        f.destination.toLowerCase().contains(query)
+      ).toList();
+    }
 
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
@@ -533,7 +575,7 @@ class _FlightDetailSheet extends StatelessWidget {
                   _InfoTile('Gate', flight.gate),
                   _InfoTile('Terminal', flight.terminal),
                   _InfoTile('Boarding', flight.boardingIn > 0 ? '${flight.boardingIn}m' : 'Now'),
-                  _InfoTile('Class', 'Economy'),
+                  const _InfoTile('Class', 'Economy'),
                 ],
               ),
             ),
