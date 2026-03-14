@@ -16,6 +16,7 @@ dependencies:
   percent_indicator: ^4.2.3
   smooth_page_indicator: ^1.1.0
   flutter_native_splash: ^2.4.7
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

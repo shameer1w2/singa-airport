@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import '../theme/app_theme.dart';
 import '../models/models.dart';
-import '../widgets/shared_widgets.dart';
 
 class TicketScreen extends StatefulWidget {
   const TicketScreen({super.key});
@@ -251,7 +251,7 @@ class _TicketScreenState extends State<TicketScreen> {
             children: [
               Container(
                 height: 30,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.surfaceCard,
                   border: Border.symmetric(
                     vertical: BorderSide(color: AppColors.border, width: 0.5),
@@ -314,11 +314,20 @@ class _TicketScreenState extends State<TicketScreen> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Image.network(
-                    'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${flight.flightNumber}',
-                    height: 120,
-                    width: 120,
-                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.qr_code_2_rounded, size: 100, color: Colors.black),
+                  child: QrImageView(
+                    data: flight.flightNumber,
+                    version: QrVersions.auto,
+                    size: 120,
+                    eyeStyle: const QrEyeStyle(
+                      eyeShape: QrEyeShape.square,
+                      color: Colors.black,
+                    ),
+                    dataModuleStyle: const QrDataModuleStyle(
+                      dataModuleShape: QrDataModuleShape.square,
+                      color: Colors.black,
+                    ),
+                    errorStateBuilder: (context, error) =>
+                        const Icon(Icons.qr_code_2_rounded, size: 100, color: Colors.black),
                   ),
                 ),
                 const SizedBox(height: 16),

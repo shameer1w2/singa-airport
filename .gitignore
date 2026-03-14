@@ -33,7 +33,10 @@ migrate_working_dir/
 .pub/
 /build/
 /coverage/
-analyze_*.txt
+analyze*
+out.txt
+.env*
+*.secret
 
 # Symbolication related
 app.*.symbols

@@ -353,7 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 6),
             Text(
-              '27 Aug 2022 ${flight.departureTime}',
+              flight.departureTime,
               style: GoogleFonts.inter(
                 color: AppColors.textSecondary,
                 fontSize: 13,

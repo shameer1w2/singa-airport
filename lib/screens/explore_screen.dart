@@ -46,6 +46,7 @@ class _ExploreScreenState extends State<ExploreScreen> with SingleTickerProvider
         _places = (data['places'] as List)
             .map((e) => Place.fromJson(e as Map<String, dynamic>))
             .toList();
+        _filteredPlaces = _places;
         _isLoading = false;
       });
     } catch (e) {
