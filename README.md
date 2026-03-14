@@ -59,7 +59,7 @@ lib/
 
 1. **Clone the project**
    ```bash
-   git clone https://github.com/shameer1w2/flutter-airport.git
+   git clone https://github.com/shameer1w2/singa-airport.git
    ```
 2. **Install dependencies**
    ```bash
